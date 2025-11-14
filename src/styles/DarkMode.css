@@ -1,0 +1,12 @@
+/* TODO (optional): Define styles for dark mode */
+.inDarkMode {
+    background-color: #4E5866;
+    color: #FFFDFA;
+}
+
+.inLightMode {
+    background-color: #FFFDFA;
+    color: #4E5866;
+}
+
+/* TODO (optional): Ensure text and background colors adjust for dark mode */
