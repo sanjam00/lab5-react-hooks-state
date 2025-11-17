@@ -3,6 +3,7 @@ import ProductList from './components/ProductList'
 import DarkModeToggle from './components/DarkModeToggle'
 import Cart from './components/Cart'
 import styles from './styles/DarkMode.css'
+import { Alert } from '@mui/material'
 
 export const sampleProducts = [
   { id: 1, name: 'Apple', price: '$1.00', category: 'Fruits', inStock: true },
@@ -22,18 +23,32 @@ const App = () => {
   }
 
   // TODO: Implement state for category filtering
-  const [filter, setFilter] = useState('');
+  const [displayItems, setDisplayItems] = useState(sampleProducts);
+  // const filteredProducts = filter
+  //   ? sampleProducts.filter((p) => p.category === filter)
+  //   : sampleProducts;
 
-  const filteredProducts = filter
-    ? sampleProducts.filter((p) => p.category === filter)
-    : sampleProducts;
+  function changeFilter(filter) {
+    const newList = sampleProducts.filter((item) => {
+      if (filter === "All") return true;
+
+      return item.category === filter;
+    })
+    setDisplayItems(newList);
+    console.log(newList)
+  }
+
+  // const displayItems = sampleProducts.filter((item) => {
+  //   if (filter === "All") return true;
+
+  //   return item.category === filter;
+  // })
 
   return (
     <div className={darkMode ? "inDarkMode" : "inLightMode"}>
       <h1>🛒 Shopping App</h1>
 
       <DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
-      {console.log("dark mode is", darkMode)}
       <p>
         Welcome! Your task is to implement filtering, cart management, and dark
         mode.
@@ -41,13 +56,14 @@ const App = () => {
 
       {/* TODO: Implement category filter dropdown */}
       <label>Filter by Category: </label>
-      <select>
-        <option value="all" onSelect={() => setFilter('')}>All</option>
-        <option value="Fruits" onSelect={() => setFilter('Fruits')}>Fruits</option>
-        <option value="Dairy" onSelect={() => setFilter(Dairy)}>Dairy</option>
+      <select onChange={(e) => changeFilter(e.target.value)}>
+        <option value="All">All</option>
+        <option value="Fruits">Fruits</option>
+        <option value="Dairy">Dairy</option>
+        <option value="Meat">Meat</option>
       </select>
 
-      <ProductList handleCart={handleCart} sampleProducts={sampleProducts} />
+      <ProductList handleCart={handleCart} displayItems={displayItems} />
 
       {/* TODO: Implement and render Cart component */}
       <Cart cart={cart} sampleProducts={sampleProducts} />

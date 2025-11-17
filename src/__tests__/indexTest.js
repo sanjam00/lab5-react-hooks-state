@@ -1,19 +1,23 @@
 import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import App from '../App'
-import { sampleProducts } from '../components/ProductList'
+import { sampleProducts } from '../App'
 import '@testing-library/jest-dom'
 
 test('toggles dark mode on button click', () => {
   render(<App />)
-  const toggleBtn = screen.getByRole('button', { name: /toggle/i })
+  //const toggleBtn = screen.getByRole('button', { name: /toggle/i }) // collecting the attribute this way is litterally not peossible per documentation
+  const toggleBtn = screen.getByRole('button', { name: /light/i })
   expect(toggleBtn).toBeInTheDocument()
 
-  fireEvent.click(toggleBtn)
-  expect(toggleBtn.textContent.toLowerCase()).toMatch(/light/i)
+  // get the button element
+  // getAttribute 
 
   fireEvent.click(toggleBtn)
   expect(toggleBtn.textContent.toLowerCase()).toMatch(/dark/i)
+
+  fireEvent.click(toggleBtn)
+  expect(toggleBtn.textContent.toLowerCase()).toMatch(/light/i)
 })
 
 test('filters products by category', () => {
